@@ -1,6 +1,7 @@
 id: hackers-organized
 name: Hackers Organized
 summary: The standard Hackers Organized demo
+name_template: "${project_name}"
 details: |
   This scenario creates the classic Hackers Organized demo. It creates a new repo from the template that you can then demo the component and workflow creation process.
   Optionally, you can tell it to pre-run either of those steps so you are left with the final result.

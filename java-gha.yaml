@@ -1,6 +1,7 @@
 id: java-gha
 name: GHA-only Java Demo
 summary: A demo where all operations occur in GHA and push the results to Unify.
+name_template: "${project_name}"
 details: |
   This demo is for scenarios where you want to demonstrate to prospects/customers who already have existing workloads in GHA and don't want to have to rewrite anything. Here everything happens inside of GHA and it sends the data to Unify.
 

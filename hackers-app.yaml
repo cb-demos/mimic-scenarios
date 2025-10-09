@@ -1,6 +1,7 @@
 id: hackers-app
 name: Hackers App
 summary: The full Hackers App RO demo
+name_template: "${project_name}-app"
 details: |
   This scenario sets up the complete Hackers App demonstration environment featuring a full-stack application with three services.
 
