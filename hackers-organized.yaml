@@ -9,6 +9,21 @@ details: |
   This scenario will generate a new environment for you and map it to the deployment.
   You can optionally use an existing environment to reuse it across apps (note that the cleanup process deletes the environment).
 
+required_properties:
+  - JENKINS_URL
+  - JENKINS_JOB
+  - DOCKER_USER
+required_secrets:
+  - GH_TOKEN
+  - DOCKER_TOKEN
+  - SNYK_ORGNAME
+  - SNYK_TOKEN
+  - KUBECONFIG
+  - JENKINS_USERNAME
+  - JENKINS_TOKEN
+  - SONAR_USER
+  - SONAR_TOKEN
+
 repositories:
   - source: cb-demos/hackers-source
     target_org: "${target_org}"
@@ -16,6 +31,7 @@ repositories:
     create_component: "${create_component}"
     replacements:
       "PROJECT_NAME": "${project_name}"
+      "ORG_NAME": "${target_org}"
       "REPLACE_ME_ENV": "${environment_name}"
       "REPLACE_ME_USE_VPC": "${env.USE_VPC}"
       "REPLACE_ME_FM_INSTANCE": "${env.FM_INSTANCE}"

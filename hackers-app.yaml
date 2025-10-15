@@ -5,17 +5,18 @@ name_template: "${project_name}-app"
 details: |
   This scenario sets up the complete Hackers App demonstration environment featuring a full-stack application with three services.
 
-  Requires:
-    - vars.DOCKERHUB_USER
-    - secrets.DOCKERHUB_TOKEN
-    - secrets.kubeconfig
-    - secrets.UNIFY_TOKEN
-    - secrets.JIRA_URL
-    - secrets.JIRA_USERNAME
-    - secrets.JIRA_TOKEN
-    - vars.SERVICENOW_URL
-    - secrets.SERVICENOW_USERNAME
-    - secrets.SERVICENOW_PASSWORD
+required_properties:
+  - DOCKERHUB_USER
+  - SERVICENOW_URL
+required_secrets:
+  - DOCKERHUB_TOKEN
+  - KUBECONFIG
+  - UNIFY_TOKEN
+  - JIRA_URL
+  - JIRA_USERNAME
+  - JIRA_TOKEN
+  - SERVICENOW_USERNAME
+  - SERVICENOW_PASSWORD
 
 repositories:
   - source: cb-demos/hackers-web-template
