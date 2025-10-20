@@ -43,6 +43,11 @@ repositories:
         operation: move
         when_true:
           workflow.yaml: .cloudbees/workflows/workflow.yaml
+applications:
+  - name: "hackers-organized"
+    environments:
+      - "${environment_name}"
+    is_shared: true
 environments:
   - name: "${environment_name}"
     env:
