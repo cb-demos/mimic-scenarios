@@ -6,10 +6,10 @@ details: |
   This scenario sets up the complete Hackers App demonstration environment featuring a full-stack application with three services.
 
 required_properties:
-  - DOCKERHUB_USER
+  - DOCKER_USER
   - SERVICENOW_URL
 required_secrets:
-  - DOCKERHUB_TOKEN
+  - DOCKER_TOKEN
   - KUBECONFIG
   - UNIFY_TOKEN
   - JIRA_URL
@@ -26,6 +26,8 @@ repositories:
     replacements:
       TARGET_ORG: "${target_org}"
       PROJECT_NAME: "${project_name}"
+      REPLACE_ME_USE_VPC: "${env.USE_VPC}"
+      REPLACE_ME_FM_INSTANCE: "${env.FM_INSTANCE}"
     files_to_modify:
       - ".cloudbees/workflows/deploy.yaml"
       - ".cloudbees/workflows/build.yaml"
