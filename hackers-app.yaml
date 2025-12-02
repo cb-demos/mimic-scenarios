@@ -6,10 +6,11 @@ details: |
   This scenario sets up the complete Hackers App demonstration environment featuring a full-stack application with three services.
 
 required_properties:
-  - DOCKER_USER
   - SERVICENOW_URL
+  - IMAGE_BUILDER_AWS_ROLE_ARN
+  - AWS_REGION
+  - ECR_REGISTRY
 required_secrets:
-  - DOCKER_TOKEN
   - KUBECONFIG
   - UNIFY_TOKEN
   - JIRA_URL
