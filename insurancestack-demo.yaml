@@ -60,10 +60,10 @@ parameter_schema:
 
 required_secrets:
   - KUBECONFIG
-  - IStack_docker_token
+  - DOCKER_TOKEN
 
 required_properties:
-  - IStack_docker_user
+  - DOCKER_USER
 
 repositories:
   - source: CB-InsuranceStack/InsuranceStack
