@@ -74,7 +74,7 @@ repositories:
       REPLACE_ENVIRONMENT_NAME: "${project_name}-${environment}"
       REPLACE_INSTANCE_ID: "${project_name}"
     files_to_modify:
-      - .cloudbees/workflows/build-and-test.yaml
+      - ".cloudbees/workflows/build-and-test.yaml"
 
 environments:
   - name: "${project_name}-${environment}"
