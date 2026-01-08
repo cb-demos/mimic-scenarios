@@ -71,12 +71,12 @@ repositories:
     repo_name_template: "${project_name}"
     create_component: true
     replacements:
-      # Update deployment job to use dynamic environment name
-      "environment: insurance-stack-dev": "environment: ${project_name}-${environment}"
-      # Update environment_name parameter passed to deploy workflow
-      "environment_name: insurance-stack-dev": "environment_name: ${project_name}-${environment}"
-      # Update instance_id to use project name for unique subdomain
-      "instance_id: demo": "instance_id: ${project_name}"
+      # Update deployment job environment (4 spaces indentation)
+      "    environment: insurance-stack-dev": "    environment: ${project_name}-${environment}"
+      # Update environment_name parameter (6 spaces indentation)
+      "      environment_name: insurance-stack-dev": "      environment_name: ${project_name}-${environment}"
+      # Update instance_id (6 spaces indentation)
+      "      instance_id: demo": "      instance_id: ${project_name}"
     files_to_modify:
       - .cloudbees/workflows/build-and-test.yaml
 
