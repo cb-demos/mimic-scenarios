@@ -71,7 +71,7 @@ repositories:
     repo_name_template: "${project_name}"
     create_component: true
     replacements:
-      "account-stack-dev":    "${project_name}-${environment}"
+      account-stack-dev:    "${project_name}-${environment}"
     files_to_modify:
       - ".cloudbees/workflows/build-and-test.yaml"
 
