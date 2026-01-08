@@ -60,10 +60,10 @@ parameter_schema:
 
 required_secrets:
   - KUBECONFIG
-  - DOCKER_TOKEN
+  - AStack_docker_token
 
 required_properties:
-  - DOCKER_USER
+  - AStack_docker_user
 
 repositories:
   - source: CB-AccountStack/AccountStack
@@ -77,9 +77,6 @@ repositories:
       "environment_name: account-stack-dev": "environment_name: ${project_name}-${environment}"
       # Update instance_id to use project name for unique subdomain
       "instance_id: demo": "instance_id: ${project_name}"
-      # Replace app-specific Docker credentials with golden demos standard
-      '${{ vars.AStack_docker_user }}': '${{ vars.DOCKER_USER }}'
-      '${{ secrets.AStack_docker_token }}': '${{ secrets.DOCKER_TOKEN }}'
     files_to_modify:
       - .cloudbees/workflows/build-and-test.yaml
 
