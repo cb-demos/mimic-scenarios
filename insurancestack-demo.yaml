@@ -71,12 +71,9 @@ repositories:
     repo_name_template: "${project_name}"
     create_component: true
     replacements:
-      # Update deployment job environment (4 spaces indentation)
-      "    environment: insurance-stack-dev": "    environment: ${project_name}-${environment}"
-      # Update environment_name parameter (6 spaces indentation)
-      "      environment_name: insurance-stack-dev": "      environment_name: ${project_name}-${environment}"
-      # Update instance_id (6 spaces indentation)
-      "      instance_id: demo": "      instance_id: ${project_name}"
+      # Replace placeholder tokens with dynamic values
+      REPLACE_ENVIRONMENT_NAME: "${project_name}-${environment}"
+      REPLACE_INSTANCE_ID: "${project_name}"
     files_to_modify:
       - .cloudbees/workflows/build-and-test.yaml
 
