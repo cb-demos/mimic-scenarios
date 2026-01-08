@@ -21,15 +21,20 @@ details: |
 
   After setup completes, manually trigger the build-and-test workflow to deploy.
   The application will be available at:
-  https://accountstack-demo-account-stack-{environment}.demos.se-main-demo.sa-demo.beescloud.com
+  https://accountstack-{project_name}-{project_name}-{environment}.demos.se-main-demo.sa-demo.beescloud.com
 
-  Example: https://accountstack-demo-account-stack-dev.demos.se-main-demo.sa-demo.beescloud.com
+  Examples:
+  - Project "acme", env "dev": https://accountstack-acme-acme-dev.demos.se-main-demo.sa-demo.beescloud.com
+  - Project "customer1", env "staging": https://accountstack-customer1-customer1-staging.demos.se-main-demo.sa-demo.beescloud.com
 
   URL Pattern: {app_name}-{instance_id}-{environment_name}.{base_domain}
-  - app_name: "accountstack" (configured in workflow)
-  - instance_id: "demo" (default in workflow)
-  - environment_name: "account-stack-{environment}" (Kubernetes namespace)
+  - app_name: "accountstack" (static in workflow)
+  - instance_id: {project_name} (dynamic, from scenario parameter)
+  - environment_name: "{project_name}-{environment}" (dynamic, from scenario parameters)
   - base_domain: "demos.se-main-demo.sa-demo.beescloud.com" (wildcard DNS)
+
+  Note: Mimic performs file replacements to inject your project_name and environment
+  into the workflow file before the first run.
 
 parameter_schema:
   properties:
@@ -61,6 +66,15 @@ repositories:
     target_org: "${target_org}"
     repo_name_template: "${project_name}"
     create_component: true
+    replacements:
+      # Update deployment job to use dynamic environment name
+      "environment: account-stack-dev": "environment: ${project_name}-${environment}"
+      # Update environment_name parameter passed to deploy workflow
+      "environment_name: account-stack-dev": "environment_name: ${project_name}-${environment}"
+      # Update instance_id to use project name for unique subdomain
+      "instance_id: demo": "instance_id: ${project_name}"
+    files_to_modify:
+      - .cloudbees/workflows/build-and-test.yaml
 
 environments:
   - name: "${project_name}-${environment}"
