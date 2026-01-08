@@ -8,7 +8,7 @@ details: |
   - CloudBees CI/CD workflows with monorepo structure
   - Helm-based Kubernetes deployment
   - 7 feature flags with real-time updates
-  - Path-based multi-tenant routing
+  - Subdomain-based routing with wildcard DNS
 
   This scenario automatically creates:
   - GitHub repository (forked from CB-InsuranceStack/InsuranceStack)
@@ -19,9 +19,17 @@ details: |
   REQUIRED: KUBECONFIG secret must exist at organization level
   The scenario will prompt you to create it if missing.
 
-  After setup completes, manually trigger the deploy-simple workflow to deploy.
+  After setup completes, manually trigger the build-and-test workflow to deploy.
   The application will be available at:
-  https://insurancestack.se-main-demo.sa-demo.beescloud.com/{org}/{environment}
+  https://insurancestack-demo-insurance-stack-{environment}.demos.se-main-demo.sa-demo.beescloud.com
+
+  Example: https://insurancestack-demo-insurance-stack-dev.demos.se-main-demo.sa-demo.beescloud.com
+
+  URL Pattern: {app_name}-{instance_id}-{environment_name}.{base_domain}
+  - app_name: "insurancestack" (configured in workflow)
+  - instance_id: "demo" (default in workflow)
+  - environment_name: "insurance-stack-{environment}" (Kubernetes namespace)
+  - base_domain: "demos.se-main-demo.sa-demo.beescloud.com" (wildcard DNS)
 
 parameter_schema:
   properties:
