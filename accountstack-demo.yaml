@@ -16,14 +16,15 @@ details: |
   - CloudBees environment with FM_TOKEN variable
   - CloudBees application linking component and environment
 
-  REQUIRED: KUBECONFIG secret must exist at organization level
-  The scenario will prompt you to create it if missing.
+  REQUIRED: The following must exist at organization level:
+  - KUBECONFIG secret (scenario will prompt if missing)
+  - STACK_BASE_NAME variable (e.g., demos.se-main-demo.sa-demo.beescloud.com)
 
   After setup completes, manually trigger the build-and-test workflow to deploy.
   The application will be available at:
-  https://accountstack-{project_name}-{project_name}-{environment}.demos.se-main-demo.sa-demo.beescloud.com
+  https://accountstack-{project_name}-{project_name}-{environment}.{STACK_BASE_NAME}
 
-  Examples:
+  Examples (assuming STACK_BASE_NAME = demos.se-main-demo.sa-demo.beescloud.com):
   - Project "acme", env "dev": https://accountstack-acme-acme-dev.demos.se-main-demo.sa-demo.beescloud.com
   - Project "customer1", env "staging": https://accountstack-customer1-customer1-staging.demos.se-main-demo.sa-demo.beescloud.com
 
@@ -31,7 +32,7 @@ details: |
   - app_name: "accountstack" (static in workflow)
   - instance_id: {project_name} (dynamic, from scenario parameter)
   - environment_name: "{project_name}-{environment}" (dynamic, from scenario parameters)
-  - base_domain: "demos.se-main-demo.sa-demo.beescloud.com" (wildcard DNS)
+  - base_domain: $STACK_BASE_NAME variable (must be set in CloudBees organization)
 
   Note: Mimic performs file replacements to inject your project_name and environment
   into the workflow file before the first run.
@@ -72,8 +73,10 @@ repositories:
     create_component: true
     replacements:
       account-stack-dev:    "${project_name}-${environment}"
+      secrets.FM_TOKEN:     "vars.FM_TOKEN"
     files_to_modify:
       - ".cloudbees/workflows/build-and-test.yaml"
+      - ".cloudbees/workflows/deploy.yaml"
 
 environments:
   - name: "${project_name}-${environment}"
