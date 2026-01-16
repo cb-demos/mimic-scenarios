@@ -16,7 +16,7 @@ details: |
   - CloudBees environment with FM_TOKEN variable
   - CloudBees application linking component and environment
 
-  REQUIRED: The following must exist at organization level:
+  REQUIRED: The following must exist at organization level: (Unify Golden Demo Unify Org has this already setup )
   - KUBECONFIG secret (scenario will prompt if missing)
   - STACK_BASE_NAME variable (e.g., demos.se-main-demo.sa-demo.beescloud.com)
 
@@ -24,9 +24,6 @@ details: |
   The application will be available at:
   https://accountstack-{project_name}-{project_name}-{environment}.{STACK_BASE_NAME}
 
-  Examples (assuming STACK_BASE_NAME = demos.se-main-demo.sa-demo.beescloud.com):
-  - Project "acme", env "dev": https://accountstack-acme-acme-dev.demos.se-main-demo.sa-demo.beescloud.com
-  - Project "customer1", env "staging": https://accountstack-customer1-customer1-staging.demos.se-main-demo.sa-demo.beescloud.com
 
   URL Pattern: {app_name}-{instance_id}-{environment_name}.{base_domain}
   - app_name: "accountstack" (static in workflow)
