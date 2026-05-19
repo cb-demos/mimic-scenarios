@@ -1,0 +1,138 @@
+id: engineer-interview
+name: Engineer Interview - Smart Tests
+summary: Sets up a candidate environment for exploring CloudBees Smart Tests
+name_template: "${project_name}"
+details: |
+  # Engineer Interview: CloudBees Smart Tests
+
+  This scenario provisions a personalized repository and CloudBees environment for
+  engineering interview candidates to explore CloudBees Smart Tests.
+
+  ---
+
+  ## 1. CloudBees Account Setup
+
+  Sign up or log in at https://cloudbees.io.
+
+  - After signing up, verify your email address and skip the product tour.
+  - If you already have an account, log in at https://app.cloudbees.io.
+
+  ## 2. Install the Smart Tests CLI
+
+  Install using [`uv`](https://docs.astral.sh/uv/):
+
+  ```
+  uv tool install smart-tests-cli~=2.0
+  ```
+
+  Verify installation:
+
+  ```
+  smart-tests --help
+  ```
+
+  ## 3. Configure Your API Token
+
+  In the Smart Tests web app, navigate to:
+  **Workspace Settings → API Token**
+
+  Generate a token and set it as an environment variable:
+
+  ```
+  export SMART_TESTS_TOKEN=<YOUR_API_TOKEN>
+  ```
+
+  Then connect to your organization:
+
+  ```
+  smart-tests config set --org-id <YOUR_ORG_ID>
+  ```
+
+  ## 4. Hands-On Lab
+
+  Follow the Smart Tests Hands-On Lab to complete the interview exercise:
+
+  - Lab overview: https://github.com/cloudbees-oss/smart-tests-hands-on-lab/tree/main
+  - Lab 0 (Prerequisites & setup): https://github.com/cloudbees-oss/smart-tests-hands-on-lab/blob/main/customer/LAB0.md
+  - Lab 1 (Predictive Test Selection locally): https://github.com/cloudbees-oss/smart-tests-hands-on-lab/blob/main/customer/LAB1.md
+  - Lab 2 (CI integration with GitHub Actions): https://github.com/cloudbees-oss/smart-tests-hands-on-lab/blob/main/customer/LAB2.md
+
+  ## 5. Smart Tests Documentation
+
+  Full documentation: https://docs.cloudbees.com/docs/cloudbees-smart-tests/latest/
+
+  ---
+
+  Contact your interviewer if you have any questions. Good luck!
+
+repositories:
+  - source: cb-demos/hackers-source
+    target_org: "${target_org}"
+    repo_name_template: "${project_name}"
+    create_component: "${create_component}"
+    replacements:
+      "PROJECT_NAME": "${project_name}"
+      "ORG_NAME": "${target_org}"
+      "REPLACE_ME_ENV": "${environment_name}"
+      "REPLACE_ME_USE_VPC": "${env.USE_VPC}"
+      "REPLACE_ME_FM_INSTANCE": "${env.FM_INSTANCE}"
+    files_to_modify:
+      - README.md
+      - workflow.yaml
+    conditional_file_operations:
+      - condition_parameter: auto_setup_workflow
+        operation: move
+        when_true:
+          workflow.yaml: .cloudbees/workflows/workflow.yaml
+
+applications:
+  - name: "engineer-interview"
+    environments:
+      - "${environment_name}"
+    is_shared: true
+
+environments:
+  - name: "${environment_name}"
+    env:
+      - name: "namespace"
+        value: "${environment_name}"
+    create_fm_token_var: true
+    flags:
+      - "default.score"
+
+flags:
+  - name: "default.score"
+    type: boolean
+
+computed_variables:
+  environment_name:
+    default_from: custom_environment
+    fallback_template: "${project_name}-dev"
+
+parameter_schema:
+  properties:
+    project_name:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: Candidate identifier used to name the repository (lowercase, alphanumeric with hyphens)
+      placeholder: "e.g., jane-smith-interview"
+    target_org:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: The GitHub organization to create the repository in
+    create_component:
+      type: boolean
+      default: false
+      description: Create a CloudBees Unify component for the repository
+    custom_environment:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: Custom environment name (optional, generates one from project_name if omitted)
+      placeholder: "e.g., jane-smith-interview-dev"
+    auto_setup_workflow:
+      type: boolean
+      default: false
+      description: Automatically place the workflow file in the .cloudbees/workflows directory
+  required:
+    - project_name
+    - target_org
